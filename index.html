@@ -11,61 +11,87 @@
             box-sizing: border-box;
         }
         body {
-            display: flex;
-            height: 100vh;
             font-family: Arial, sans-serif;
         }
         .container {
             display: flex;
-            width: 100%;
-        }
-        .left-column {
-            flex: 2;
-            display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            border-right: 2px solid #ddd;
+            height: 100vh;
+            width: 100%;
+            position: relative;
         }
-        .document {
-            flex-grow: 1;
+        .content {
+            display: none; /* 默认隐藏 */
+            width: 100%;
+            height: 100vh;
             padding: 20px;
             overflow-y: auto;
+        }
+        .document {
+            background-color: #fff;
             border-bottom: 2px solid #ddd;
         }
         .sidebar {
-            padding: 20px;
             background-color: #f4f4f4;
         }
         .chatbot {
-            flex: 1;
+            background-color: #e8f0fe;
             display: flex;
             flex-direction: column;
-            padding: 20px;
         }
         iframe {
             width: 100%;
             height: 100%;
-            min-height: 700px;
             border: none;
         }
-        h2 {
-            margin-bottom: 10px;
+        /* 悬浮菜单按钮 */
+        .menu-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        ul {
-            list-style-type: none;
+        /* 选项菜单 */
+        .menu-options {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            display: none;
         }
-        li {
-            margin-bottom: 10px;
-            font-size: 16px;
+        .menu-options button {
+            display: block;
+            width: 150px;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            border-radius: 5px;
+        }
+        .menu-options button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <!-- 左侧：Document 在上，Sidebar 在下 -->
-        <div class="left-column">
-            <div class="document">
-                <h2>Soham Murders - Interrogation Evidence Document</h2>
+        <!-- Document -->
+        <div id="document" class="content document">
+            <h2>Soham Murders - Interrogation Evidence Document</h2>
                 <h3>1. Forensic Botany Evidence</h3>
                 <p><mark>Plant material, including nettles and other local flora, was found on Ian Huntley’s vehicle.</mark> This evidence indicated that his car had been driven to the area where the victims' bodies were later discovered. The presence of these plants helped forensic experts narrow down the search area and linked Huntley to the crime scene.</p>
                 <h3>2. Fiber Evidence</h3>
@@ -82,30 +108,57 @@
                 <p>The girls' bodies were found in a remote, wooded area near Lakenheath, a location Huntley had access to. <mark>The forensic examination of the scene provided evidence that the bodies had been transported there after their deaths</mark>, and the connection between the site and Huntley strengthened the case against him.</p>
                 <h3>8. Behavioral Analysis</h3>
                 <p><mark>Experts analyzed Huntley’s behavior before and after the disappearance, noting signs of deception and guilt.</mark> His excessive involvement in the search, unusual emotional responses, and inconsistencies in his testimony were all indicative of a person attempting to manipulate the investigation.</p>
-            </div>
-            <div class="sidebar">
-                <h2>Most Frequent Questions</h2>
-                <ul>
-                    <li>1. What's your name? What did you do on 4 Aug 2002, the day the girls disappeared?</li>
-                    <li>2. There are the girls' DNA and fiber evidence left on your vehicle and your home. How do you explain that?</li>
-                    <li>3. Botanic evidence has shown that your vehicle has been moved to the place where the girls' bodies were found.</li>
-                    <li>4. Why did you clean your home and car thoroughly after the girl went missing? There aren't many coincidences in real life.</li>
-                    <li>5. You are lying because you are hiding the truth.</li>
-                    <li>6. If you plead guilty, your penalty might be lighter.</li>
-                    <li>7. Poor innocent souls, look at what you did to them!</li>
-                </ul>
-            </div>
         </div>
-        
-        <!-- 右侧：Chatbot -->
-        <div class="chatbot">
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="content sidebar">
+            <h2>Most Frequent Questions</h2>
+            <ul>
+                <li>1. What's your name? What did you do on 4 Aug 2002?</li>
+                <li>2. There are the girls' DNA and fiber evidence left on your vehicle and your home. How do you explain that?</li>
+                <li>3. Botanic evidence has shown that your vehicle has been moved to the place where the girls' bodies were found.</li>
+                <li>4. Why did you clean your home and car thoroughly after the girl went missing? There aren't many coincidences in real life.</li>
+                <li>5. You are lying because you are hiding the truth.</li>
+                <li>6. If you plead guilty, your penalty might be lighter.</li>
+                <li>6. Poor innocent souls, look at what you did to them!</li>
+            </ul>
+        </div>
+
+        <!-- Chatbot -->
+        <div id="chatbot" class="content chatbot">
             <iframe
                 src="https://udify.app/chatbot/ERU4tHFVNEYwYVRX"
-                style="width: 100%; height: 100%; min-height: 700px"
                 frameborder="0"
                 allow="microphone">
             </iframe>
         </div>
     </div>
+
+    <!-- 悬浮菜单按钮 -->
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+
+    <!-- 悬浮菜单选项 -->
+    <div class="menu-options" id="menu-options">
+        <button onclick="showContent('document')">📄 Document</button>
+        <button onclick="showContent('sidebar')">❓ Sidebar</button>
+        <button onclick="showContent('chatbot')">🤖 Chatbot</button>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("menu-options");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        function showContent(contentId) {
+            // 隐藏所有内容
+            document.querySelectorAll('.content').forEach(el => el.style.display = 'none');
+            // 仅显示被选中的内容
+            document.getElementById(contentId).style.display = 'block';
+            // 关闭菜单
+            document.getElementById("menu-options").style.display = "none";
+        }
+    </script>
+
 </body>
 </html>
