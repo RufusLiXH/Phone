@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document & Chatbot</title>
+    <title>Suspect Simulator - the Soham Murders</title>
     <style>
         * {
             margin: 0;
@@ -18,6 +18,13 @@
         .container {
             display: flex;
             width: 100%;
+        }
+        .sidebar {
+            width: 25%;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-right: 2px solid #ddd;
+            overflow-y: auto;
         }
         .document {
             flex: 1;
@@ -37,10 +44,32 @@
             min-height: 700px;
             border: none;
         }
+        h2 {
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+        }
+        li {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="sidebar">
+            <h2>Most Frequent Questions</h2>
+            <ul>
+                <li>1. What's your name? What did you do on 4 Aug 2002, the day the girls disappeared?</li>
+                <li>2. There are the girls' DNA and fiber evidence left on your vehicle and your home. How do you explain that?</li>
+                <li>3. Botanic evidence has shown that your vehicle has been moved to the place where the girls' bodies were found.</li>
+                <li>4. Why did you clean your home and car thoroughly after the girl went missing? There aren't many coincidences in real life.</li>
+                <li>5. You are lying because you are hiding the truth.</li>
+                <li>6. If you plead guilty, your penalty might be lighter.</li>
+                <li>7. Poor innocent souls, look at what you did to them!</li>
+            </ul>
+        </div>
         <div class="document">
             <h2>Soham Murders - Interrogation Evidence Document</h2>
             <h3>1. Forensic Botany Evidence</h3>
@@ -62,10 +91,11 @@
         </div>
         <div class="chatbot">
             <iframe
- src="https://udify.app/chatbot/ERU4tHFVNEYwYVRX"
- style="width: 100%; height: 100%; min-height: 700px"
- frameborder="0"
- allow="microphone"></iframe>
+                src="https://udify.app/chatbot/ERU4tHFVNEYwYVRX"
+                style="width: 100%; height: 100%; min-height: 700px"
+                frameborder="0"
+                allow="microphone">
+            </iframe>
         </div>
     </div>
 </body>
